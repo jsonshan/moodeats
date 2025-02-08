@@ -1,7 +1,5 @@
-import "../styles/Header.css";
-
 function Header() {
-  return <div>moodeats</div>;
+  return <div className="header">moodeats</div>;
 }
 
 export default Header;
