@@ -4,10 +4,66 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  color: #d4a373;
+  background-color: #fefae0;
+}
+
+.input {
+  padding: 0.5rem;
+  background-color: #faedcd;
+  border: 1px solid #d4a373;
+  border-radius: 10px;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid #d4a373;
+}
+
+.input::placeholder {
+  color: #d4a373;
+  text-align: left; /* Align placeholder text to the left */
+}
+
+.button {
+  width: 25%;
+  padding: 0.5rem;
+  background-color: #d4a373;
+  color: #fefae0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .header {
-  margin: 0 0;
-  padding: 0 0;
+  font-size: 2rem;
+  font-weight: bolder;
   background-color: #ccd5ae;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.mood-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mood-input {
+  width: 50%;
+  height: 3rem;
+}
+
+.location-input {
+  width: 25%;
 }
