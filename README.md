@@ -1,8 +1,48 @@
-# React + Vite
+# Welcome to moodeats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Table of Contents
 
-Currently, two official plugins are available:
+- [moodeats](#moodeats)
+- [Technologies](#technologies)
+- [Functionality](#functionality)
+- [Installation](#installation)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## moodeats
+
+moodeats is a meal finder app that not only helps improve mood but also offers a practical solution for finding healthy meals nearby. By combining location-based recommendations with mood-driven suggestions, moodeats was born—aiming to reduce stress and provide a personalized dining experience. This project was made in HackNYU 2025 for the Lifestyle & Health Track.
+
+## Technologies
+
+This project is created with:
+
+- Vite (React)
+- Node
+- Python
+- Flask
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the needed dependencies
+
+```bash
+pip install flask flask-cors
+pip install -q -U google-genai
+pip install python-dotenv
+npm -i
+```
+
+Create .env file with:
+
+```bash
+GEMINI_KEY=your_gemini_key_here
+YELP_API_KEY=your_yelp_key_here
+GOOGLE_MAPS_KEY=your_google_maps_key_here
+```
+
+## Usage
+
+Run:
+
+```
+npm run dev
+```
