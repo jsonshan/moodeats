@@ -133,25 +133,6 @@ function MoodForm() {
           {/* Using a custom MoodButton that triggers the form submit */}
           <MoodButton />
         </form>
-
-        {/* Display categories, foods, and descriptions if available */}
-
-        {/* Display the businesses */}
-        <div className="businesses">
-          {businesses.length > 0 ? (
-            businesses.map((business, index) => (
-              <div key={index} className="business">
-                <h3>{business.name}</h3>
-                <p>{business.address}</p>
-                <p>Latitude: {business.latitude}</p>
-                <p>Longitude: {business.longitude}</p>
-                <img src={business.img} alt={business.name} />
-              </div>
-            ))
-          ) : (
-            <p></p>
-          )}
-        </div>
       </div>
       <div className="categories">
         {categories.map((category, index) => (
@@ -197,6 +178,23 @@ function MoodForm() {
         >
           find meals near you
         </button>
+      </div>
+
+      {/* Display the businesses */}
+      <div className="businesses">
+        {businesses.length > 0 ? (
+          businesses.map((business, index) => (
+            <div key={index} className="business">
+              <h3>{business.name}</h3>
+              <p>{business.address}</p>
+              <p>Latitude: {business.latitude}</p>
+              <p>Longitude: {business.longitude}</p>
+              <img src={business.img} alt={business.name} />
+            </div>
+          ))
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );
