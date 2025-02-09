@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import MoodButton from "./MoodButton";
 import MoodSlider from "./MoodSlider";
+import Modal from "./Modal";
 
 function Info({ onBusinessesUpdate }) {
   const [location, setLocation] = useState("");
   const [mood, setMood] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [foods, setFoods] = useState([]);
   const [descriptions, setDescriptions] = useState([]);
@@ -28,6 +30,14 @@ function Info({ onBusinessesUpdate }) {
       e.target.classList.remove("selected");
       e.target.classList.add("unselected");
     }
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleCategorySubmit = async () => {
@@ -57,6 +67,11 @@ function Info({ onBusinessesUpdate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const categoriesBtn = document.querySelector(".submit-button");
+    categoriesBtn.classList.remove("not-visible");
+    const infoBtn = document.querySelector(".show-categories-button");
+    infoBtn.classList.remove("not-visible");
 
     // Check if both location and mood are provided
     if (!location || !mood) {
@@ -90,7 +105,7 @@ function Info({ onBusinessesUpdate }) {
 
   return (
     <div className="mood-container temp">
-      <div>
+      <div className="form-container">
         <div className="title">How are you feeling today?</div>
         <MoodSlider />
 
@@ -119,53 +134,68 @@ function Info({ onBusinessesUpdate }) {
           {/* Using a custom MoodButton that triggers the form submit */}
           <MoodButton />
         </form>
-
-        {/* Display categories, foods, and descriptions if available */}
-        <div className="categories">
-          {categories.map((category, index) => (
-            <div
-              key={index}
-              data-category={category}
-              onClick={handleCategoryClick}
-              className="category unselected"
-            >
-              {category}
-              <div className="dropdown">
-                {foods[index]?.map((food, idx) => {
-                  return (
-                    <div
-                      onClick={handleCategoryClick}
-                      key={idx}
-                      className="dropdown-item"
-                    >
-                      {food}
-                    </div>
-                  );
-                })}
-              </div>
+      </div>
+      <div className="categories">
+        {categories.map((category, index) => (
+          <div
+            key={index}
+            data-category={category}
+            onClick={handleCategoryClick}
+            className="category unselected"
+          >
+            {category}
+            <div className="dropdown">
+              {foods[index]?.map((food, idx) => {
+                return (
+                  <div
+                    onClick={handleCategoryClick}
+                    key={idx}
+                    className="dropdown-item"
+                  >
+                    {food}
+                  </div>
+                );
+              })}
             </div>
-          ))}
-          <button onClick={handleCategorySubmit} className="button submit">
-            Find Meals Near You
-          </button>
-        </div>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={handleOpenModal}
+          className="show-categories-button not-visible"
+        >
+          Show Selected Categories
+        </button>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          selectedCategories={selectedCategories}
+          categories={categories}
+          descriptions={descriptions}
+        />
+        <button
+          onClick={handleCategorySubmit}
+          className="submit-button button not-visible"
+        >
+          find meals near you
+        </button>
+      </div>
 
-        {/* Display the businesses */}
-        <div className="businesses">
-          {businesses.length > 0 ? (
-            businesses.map((business, index) => (
-              <div key={index} className="business">
-                <h3>{business.name}</h3>
-                <p>{business.address}</p>
-                <p>Latitude: {business.latitude}</p>
-                <p>Longitude: {business.longitude}</p>
-                <img src={business.img} alt={business.name} />
-              </div>
-            ))
-          ) : (
-            <p></p>
-          )}
-        </div>
+      {/* Display the businesses */}
+      <div className="businesses">
+        {businesses.length > 0 ? (
+          businesses.map((business, index) => (
+            <div key={index} className="business">
+              <h3>{business.name}</h3>
+              <p>{business.address}</p>
+              <p>Latitude: {business.latitude}</p>
+              <p>Longitude: {business.longitude}</p>
+              <img src={business.img} alt={business.name} />
+            </div>
+          ))
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );
