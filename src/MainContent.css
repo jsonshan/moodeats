@@ -134,7 +134,12 @@ body {
   font-size: 0.8rem;
 }
 
+.form-container {
+  grid-column: 1/3;
+}
+
 .categories {
+  grid-column: -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 2rem;

@@ -28,3 +28,6 @@ worker/gemini_key.txt
 *.njsproj
 *.sln
 *.sw?
+
+.env
+.venv
