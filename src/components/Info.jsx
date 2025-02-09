@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MoodButton from "./MoodButton";
 import MoodSlider from "./MoodSlider";
 
-function MoodForm() {
+function Info({ onBusinessesUpdate }) {
   const [location, setLocation] = useState("");
   const [mood, setMood] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -46,6 +46,7 @@ function MoodForm() {
         console.log("Businesses received from Flask:", data);
         setBusinesses(data); // Set the businesses to display
         setError(null); // Reset any previous errors
+        onBusinessesUpdate(data);
       } else {
         setError("Failed to fetch businesses");
       }
@@ -170,4 +171,4 @@ function MoodForm() {
   );
 }
 
-export default MoodForm;
+export default Info;
