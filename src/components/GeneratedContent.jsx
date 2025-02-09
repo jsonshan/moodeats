@@ -1,5 +1,12 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 import "../temp.css";
 import CheckedImage from "../assets/checked.png";
 import Location from "../assets/location.png";
@@ -8,7 +15,11 @@ function GeneratedContent({ businesses }) {
   const [generating, setGenerating] = useState(true);
   const [foods, setFoods] = useState(["Coffee Tea", "Acai Bowls", "Bakeries"]);
   const [locations, setLocations] = useState([
-    { lat: 40.7369861926197, lng: -73.9903117696943, name: "Union Square Green" }
+    {
+      lat: 40.7369861926197,
+      lng: -73.9903117696943,
+      name: "Union Square Green",
+    },
   ]); // Initial locations
 
   useEffect(() => {
@@ -25,30 +36,30 @@ function GeneratedContent({ businesses }) {
   }, [businesses]); // Trigger when businesses prop changes
 
   useEffect(() => {
-    console.log('Updated locations:', locations); // Log updated locations to check
+    console.log("Updated locations:", locations); // Log updated locations to check
   }, [locations]);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const apiKey = "AIzaSyDllrY5vO25tKoneqAQM07yBSqmt0yERkw";  // Remember to replace this with your actual API key
+  const apiKey = "AIzaSyDllrY5vO25tKoneqAQM07yBSqmt0yERkw"; // Remember to replace this with your actual API key
 
   const containerStyle = {
-    width: '100%',
-    height: '500px'
+    width: "100%",
+    height: "500px",
   };
 
   const center = {
     lat: 40.7128, // Default New York Latitude
-    lng: -74.0060 // Default New York Longitude
+    lng: -74.006, // Default New York Longitude
   };
 
   const userLocation = { lat: 40.7372861926197, lng: -73.9903117696943 }; // User's Entered Location
 
   return (
     <div className="container">
-      <p className="subtitle">Generating your personalized experience</p>
-      
+      <p className="subtitle">generating your personalized experience</p>
+
       {generating ? (
-        <div>
+        <div className="temp2">
           <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap
               mapContainerStyle={containerStyle}
@@ -62,26 +73,40 @@ function GeneratedContent({ businesses }) {
               }}
             >
               {/* Render markers only if locations are present */}
-              {locations.length > 0 && locations.map((location, index) => (
-                <Marker
-                  key={index}
-                  position={{ lat: location.lat, lng: location.lng }}
-                  label={location.name}
-                  onClick={() => setSelectedLocation(location)} // Set the selected location on marker click
-                />
-              ))}
+              {locations.length > 0 &&
+                locations.map((location, index) => (
+                  <Marker
+                    key={index}
+                    position={{ lat: location.lat, lng: location.lng }}
+                    label={location.name}
+                    onClick={() => setSelectedLocation(location)} // Set the selected location on marker click
+                  />
+                ))}
 
               {selectedLocation && (
                 <InfoWindow
-                  position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
+                  position={{
+                    lat: selectedLocation.lat,
+                    lng: selectedLocation.lng,
+                  }}
                   onCloseClick={() => setSelectedLocation(null)}
                 >
                   <div>
-                    <img style={{ height: '75px', width: 'auto' }} src={Location} alt="location icon" />
+                    <img
+                      style={{ height: "75px", width: "auto" }}
+                      src={Location}
+                      alt="location icon"
+                    />
                     <h3>{selectedLocation.name}</h3>
                     <p>
-                      <a href={`https://www.google.com/maps?q=${encodeURIComponent(selectedLocation.name)}`} target="_blank" rel="noopener noreferrer">
-                        Click Here to view on Google Maps
+                      <a
+                        href={`https://www.google.com/maps?q=${encodeURIComponent(
+                          selectedLocation.name
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        click Here to view on Google Maps
                       </a>
                     </p>
                   </div>

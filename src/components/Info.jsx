@@ -117,7 +117,7 @@ function Info({ onBusinessesUpdate }) {
           <input
             className="input location-input"
             type="text"
-            placeholder="Enter your location"
+            placeholder="enter your location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
@@ -126,7 +126,7 @@ function Info({ onBusinessesUpdate }) {
           <input
             className="input mood-input"
             type="text"
-            placeholder="Begin typing here"
+            placeholder="begin typing here"
             value={mood}
             onChange={(e) => setMood(e.target.value)}
           />
