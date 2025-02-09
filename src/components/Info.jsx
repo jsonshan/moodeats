@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import MoodButton from "./MoodButton";
 import MoodSlider from "./MoodSlider";
+import Modal from "./Modal";
 
 function MoodForm() {
   const [location, setLocation] = useState("");
   const [mood, setMood] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [foods, setFoods] = useState([]);
   const [descriptions, setDescriptions] = useState([]);
@@ -29,6 +31,14 @@ function MoodForm() {
     }
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleCategorySubmit = (e) => {
     console.log(selectedCategories);
   };
@@ -36,6 +46,11 @@ function MoodForm() {
   // Function to handle form submission and fetch data from Flask
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const categoriesBtn = document.querySelector(".submit-button");
+    categoriesBtn.classList.remove("not-visible");
+    const infoBtn = document.querySelector(".show-categories-button");
+    infoBtn.classList.remove("not-visible");
 
     // Check if both location and mood are provided
     if (!location || !mood) {
@@ -126,9 +141,26 @@ function MoodForm() {
             </div>
           </div>
         ))}
-        <button onClick={handleCategorySubmit} className="button submit">
+        <button
+          onClick={handleCategorySubmit}
+          className="submit-button button not-visible"
+        >
           find meals near you
         </button>
+        <button
+          type="button"
+          onClick={handleOpenModal}
+          className="show-categories-button not-visible"
+        >
+          Show Selected Categories
+        </button>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          selectedCategories={selectedCategories}
+          categories={categories}
+          descriptions={descriptions}
+        />
       </div>
     </div>
   );
