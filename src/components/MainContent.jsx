@@ -1,3 +1,4 @@
+import Categories from "./Categories";
 import MoodForm from "./MoodForm";
 
 function MainContent() {
@@ -10,6 +11,7 @@ function MainContent() {
       <div className="mood-form-container">
         <MoodForm />
       </div>
+      <Categories />
     </div>
   );
 }
