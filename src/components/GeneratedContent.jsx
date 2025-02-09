@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import "../temp.css";
 import CheckedImage from "../assets/checked.png";
 import Location from "../assets/location.png";
@@ -15,6 +15,10 @@ function GeneratedContent() {
   const [locationInput, setLocationInput] = useState("");
   const [moodInput, setMoodInput] = useState("");
 
+  // Access the API key from environment variables
+  const apiKey = "AIzaSyDllrY5vO25tKoneqAQM07yBSqmt0yERkw";  // No need for dotenv anymore
+
+  const [selectedLocation, setSelectedLocation] = useState(null);
   // Function to send POST request to Flask backend
   const postReq = async () => {
     const url = 'http://localhost:5000/set-location-mood'; // Flask endpoint
@@ -71,26 +75,40 @@ function GeneratedContent() {
       
       {generating ? (
         <div>
-          {/* Text inputs for the user to enter location and mood */}
-          <div className="input-group">
-            <label>Location: </label>
-            <input 
-              type="text" 
-              value={locationInput} 
-              onChange={(e) => setLocationInput(e.target.value)} 
-              placeholder="Enter your location"
-            />
-          </div>
-          <div className="input-group">
-            <label>Mood: </label>
-            <input 
-              type="text" 
-              value={moodInput} 
-              onChange={(e) => setMoodInput(e.target.value)} 
-              placeholder="Enter your mood"
-            />
-          </div>
-          <button onClick={postReq}>Submit</button>
+          <LoadScript googleMapsApiKey={apiKey}>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              className="google-map-container"
+              onLoad={(map) => {
+                const bounds = new window.google.maps.LatLngBounds();
+                locations.forEach((location) => bounds.extend(location));
+                bounds.extend(userLocation);
+                map.fitBounds(bounds); // Execute fitBounds function
+              }}
+            >
+              {locations.map((location, index) => (
+                <Marker
+                  key={index}
+                  position={location}
+                  label={location.name}
+                  onClick={() => setSelectedLocation(location)}
+                />
+              ))}
+
+              {selectedLocation && (
+                <InfoWindow
+                  position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
+                  onCloseClick={() => setSelectedLocation(null)}
+                >
+                  <div>
+                    <img style={{height: '75px', width: 'auto'}} src={Location}/>
+                    <h3>{selectedLocation.name}</h3>
+                    <p><a href={`https://www.google.com/maps?q=${encodeURIComponent(selectedLocation.name)}`}>Click Here </a></p>
+                  </div>
+                </InfoWindow>
+              )}
+            </GoogleMap>
+          </LoadScript>
         </div>
       ) : (
         <div>
