@@ -6,6 +6,7 @@ function MoodForm() {
     <div className="mood-form">
       <div className="title">how are you feeling today?</div>
       <MoodSlider />
+
       <div>where are you located?</div>
       <input
         className="input location-input"

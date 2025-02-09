@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+worker/gemini_key.txt
+.venv/
+.venv
+.env
 
 # Editor directories and files
 .vscode/*

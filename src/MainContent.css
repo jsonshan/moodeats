@@ -5,6 +5,9 @@
   line-height: 1.5;
   font-weight: 400;
   color: #d4a373;
+}
+
+body {
   background-color: #fefae0;
 }
 
@@ -64,12 +67,12 @@
 }
 
 .mood-input {
-  width: 50%;
+  /* width: 50%; */
   height: 3rem;
 }
 
 .location-input {
-  width: 25%;
+  width: 50%;
 }
 
 .mood-slider {
@@ -142,17 +145,20 @@
   padding: 0.5rem 1rem;
   border-radius: 10px;
   color: white;
-  background-color: #d4a373;
 }
 
-.category {
+.category,
+.unselected {
   position: relative;
   margin: 1rem;
   padding: 1rem;
-  background-color: #faedcd;
-  border: 1px solid #d4a373;
+  background-color: #d4a373;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.selected {
+  font-weight: bolder;
 }
 
 .dropdown {
@@ -188,4 +194,10 @@
 .temp {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.submit {
+  width: 100%;
+  grid-column: 1/-1;
+  grid-row: 10;
 }

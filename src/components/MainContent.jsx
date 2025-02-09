@@ -1,5 +1,5 @@
-import Categories from "./Categories";
 import MoodForm from "./MoodForm";
+import Info from "./Info";
 import "../MainContent.css";
 function MainContent() {
   return (
@@ -8,11 +8,10 @@ function MainContent() {
         <h1>your companion for mood-boosting meals</h1>
         <p>find the best foods in your area based on your mood.</p>
       </div>
-      <div className="temp">
+      <div className="">
         <div className="mood-form-container">
-          <MoodForm />
+          <Info />
         </div>
-        <Categories />
       </div>
     </div>
   );

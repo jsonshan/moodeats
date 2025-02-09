@@ -6,21 +6,26 @@ import os
 import re
 import ast
 
+
 app = Flask(__name__)
+
 
 # Enable CORS for all routes
 CORS(app)
 
-@app.route('/set-location-mood', methods=['POST'])
+
+@app.route("/set-location-mood", methods=["POST"])
 def set_location_mood_and_get_data():
     try:
         data = request.json
         print(f"Received data: {data}")  # Debugging statement to print received data
 
-        location = data.get('location')
-        mood = data.get('mood')
+        location = data.get("location")
+        mood = data.get("mood")
 
-        print(f"Extracted location: {location}")  # Debugging statement to print extracted location
+        print(
+            f"Extracted location: {location}"
+        )  # Debugging statement to print extracted location
         print(f"Extracted mood: {mood}")  # Debugging statement to print extracted mood
 
         if not location or not mood:
@@ -36,7 +41,7 @@ def set_location_mood_and_get_data():
             "mood": mood,
             "categories": categories_,
             "foods": foods_,
-            "descriptions": descriptions_
+            "descriptions": descriptions_,
         }
         print(jsonify(response))
         return jsonify(response)
@@ -45,5 +50,6 @@ def set_location_mood_and_get_data():
         print(f"Error processing request: {e}")
         return jsonify({"error": "Internal server error", "message": str(e)}), 500
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)
