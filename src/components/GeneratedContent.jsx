@@ -16,9 +16,8 @@ function GeneratedContent() {
   const postReq = async () => {
     const url = 'localhost:5173';
     const info = {
-      // titles: ['Darling in the FranXX', 'One Piece', 'Magi'],
-      title: "test1",
-      item: "test2"
+      mood: "test1",
+      location: "test2"
     };  
 
     try {
