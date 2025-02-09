@@ -1,57 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import "../temp.css";
 import CheckedImage from "../assets/checked.png";
 import Location from "../assets/location.png";
 
-function GeneratedContent() {
+function GeneratedContent({ businesses }) {
   const [generating, setGenerating] = useState(true);
   const [foods, setFoods] = useState(["Coffee Tea", "Acai Bowls", "Bakeries"]);
-  const [businesses, setBusinesses] = useState(["Pizza Hut, 555 2nd Ave, New York, NY 10016"]);
-  const [status, setStatus] = useState(null);
-  const [error, setError] = useState(null);
+  const [locations, setLocations] = useState([
+    { lat: 40.7369861926197, lng: -73.9903117696943, name: "Union Square Green" }
+  ]); // Initial locations
 
-  // Variables to store user input
-  const [locationInput, setLocationInput] = useState("");
-  const [moodInput, setMoodInput] = useState("");
+  useEffect(() => {
+    if (businesses && businesses.length > 0) {
+      // Map the businesses into locations
+      const updatedLocations = businesses.map((business) => ({
+        lat: business.latitude,
+        lng: business.longitude,
+        name: business.name,
+      }));
 
-  // Access the API key from environment variables
-  const apiKey = "AIzaSyDllrY5vO25tKoneqAQM07yBSqmt0yERkw";  // No need for dotenv anymore
+      setLocations(updatedLocations); // Update the locations state
+    }
+  }, [businesses]); // Trigger when businesses prop changes
+
+  useEffect(() => {
+    console.log('Updated locations:', locations); // Log updated locations to check
+  }, [locations]);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
-  // Function to send POST request to Flask backend
-  const postReq = async () => {
-    const url = 'http://localhost:5000/set-location-mood'; // Flask endpoint
-    const info = {
-      mood: moodInput,       // Get mood from the input
-      location: locationInput    // Get location from the input
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      });
-
-      setStatus(response.status);
-
-      if (response.ok) {
-        const responseData = await response.json();
-        setFoods(responseData.foods || []);  // Assuming the response contains 'foods'
-        setBusinesses(responseData.businesses || []);  // Assuming the response contains 'businesses'
-        setError(null);
-      } else {
-        const errorMessage = await response.text();
-        setError(`Error: ${errorMessage}`);
-      }
-    } catch (err) {
-      setError(`Network Error: ${err.message}`);
-      setStatus(null);
-    }
-  };
+  const apiKey = "AIzaSyDllrY5vO25tKoneqAQM07yBSqmt0yERkw";  // Remember to replace this with your actual API key
 
   const containerStyle = {
     width: '100%',
@@ -59,39 +37,37 @@ function GeneratedContent() {
   };
 
   const center = {
-    lat: 40.7128, // New York Latitude
-    lng: -74.0060 // New York Longitude
+    lat: 40.7128, // Default New York Latitude
+    lng: -74.0060 // Default New York Longitude
   };
 
-  const locations = [
-    { lat: 40.7369861926197, lng: -73.9903117696943, name: "Union Square Greenmarket" },
-    { lat: 40.7399861926197, lng: -73.9803117696943, name: "Place 2" }, 
-  ];
   const userLocation = { lat: 40.7372861926197, lng: -73.9903117696943 }; // User's Entered Location
 
   return (
     <div className="container">
-      <p className="subtitle">generating your personalized experience</p>
+      <p className="subtitle">Generating your personalized experience</p>
       
       {generating ? (
         <div>
           <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap
               mapContainerStyle={containerStyle}
-              className="google-map-container"
+              center={center}
+              zoom={12}
               onLoad={(map) => {
                 const bounds = new window.google.maps.LatLngBounds();
-                locations.forEach((location) => bounds.extend(location));
-                bounds.extend(userLocation);
-                map.fitBounds(bounds); // Execute fitBounds function
+                locations.forEach((location) => bounds.extend(location)); // Adjust bounds to locations
+                bounds.extend(userLocation); // Also extend to the user location
+                map.fitBounds(bounds); // Fit bounds based on locations
               }}
             >
-              {locations.map((location, index) => (
+              {/* Render markers only if locations are present */}
+              {locations.length > 0 && locations.map((location, index) => (
                 <Marker
                   key={index}
-                  position={location}
+                  position={{ lat: location.lat, lng: location.lng }}
                   label={location.name}
-                  onClick={() => setSelectedLocation(location)}
+                  onClick={() => setSelectedLocation(location)} // Set the selected location on marker click
                 />
               ))}
 
@@ -101,9 +77,13 @@ function GeneratedContent() {
                   onCloseClick={() => setSelectedLocation(null)}
                 >
                   <div>
-                    <img style={{height: '75px', width: 'auto'}} src={Location}/>
+                    <img style={{ height: '75px', width: 'auto' }} src={Location} alt="location icon" />
                     <h3>{selectedLocation.name}</h3>
-                    <p><a href={`https://www.google.com/maps?q=${encodeURIComponent(selectedLocation.name)}`}>Click Here </a></p>
+                    <p>
+                      <a href={`https://www.google.com/maps?q=${encodeURIComponent(selectedLocation.name)}`} target="_blank" rel="noopener noreferrer">
+                        Click Here to view on Google Maps
+                      </a>
+                    </p>
                   </div>
                 </InfoWindow>
               )}
@@ -112,29 +92,25 @@ function GeneratedContent() {
         </div>
       ) : (
         <div>
-          <div className="subheading">foods</div>
+          <div className="subheading">Foods</div>
           <div className="food-container">
-            {foods.map((food, index) => {
-              return (
-                <div className="items" key={index}>
-                  <img className="check-image" src={CheckedImage} alt="checked" />
-                  <p>{food}</p>
-                </div>
-              );
-            })}
+            {foods.map((food, index) => (
+              <div className="items" key={index}>
+                <img className="check-image" src={CheckedImage} alt="checked" />
+                <p>{food}</p>
+              </div>
+            ))}
           </div>
-          <div className="subheading">businesses</div>
+          <div className="subheading">Businesses</div>
           <div className="business-container">
-            {businesses.map((business, index) => {
-              return (
-                <div className="business-items" key={index}>
-                  <p>{business}</p>
-                </div>
-              );
-            })}
+            {businesses.map((business, index) => (
+              <div className="business-items" key={index}>
+                <p>{business.name}</p>
+              </div>
+            ))}
           </div>
           <div>
-            <button className="find-map-btn">find on map</button>
+            <button className="find-map-btn">Find on Map</button>
           </div>
         </div>
       )}
