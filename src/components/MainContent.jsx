@@ -1,5 +1,5 @@
 import MoodForm from "./MoodForm";
-
+import "../MainContent.css"
 function MainContent() {
   return (
     <div className="container main-content">
