@@ -6,6 +6,7 @@
 - [Technologies](#technologies)
 - [Functionality](#functionality)
 - [Installation](#installation)
+- [Usage](#usage)
 
 ## moodeats
 
