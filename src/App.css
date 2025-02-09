@@ -22,7 +22,6 @@
 
 .input::placeholder {
   color: #d4a373;
-  text-align: left; /* Align placeholder text to the left */
 }
 
 .button {
@@ -37,13 +36,18 @@
 
 .container {
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .header {
   font-size: 2rem;
   font-weight: bolder;
-  background-color: #ccd5ae;
+  background-color: #e9edc9;
+}
+
+.title-container {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .main-content {
@@ -66,4 +70,63 @@
 
 .location-input {
   width: 25%;
+}
+
+.mood-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.slider {
+  -webkit-appearance: none; /* Remove default appearance */
+  width: 100%;
+  height: 8px;
+  background: #faedcd; /* Track color */
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default appearance */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #8b5e34; /* Thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #8b5e34; /* Thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mood-slider-icons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.mood-slider-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #8b5e34; /* Icon color */
+}
+
+.mood-slider-icon p {
+  margin: 0;
+  font-size: 0.8rem;
 }
