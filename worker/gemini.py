@@ -3,13 +3,10 @@ import os
 import re
 import ast
 
-def generate_text(mood):
-
-    with open("gemini_key.txt", "r") as file:
-        api_key = file.read().strip()
+def generate_text(mood, gemini_key):
 
     # Set the API key for the client
-    client = genai.Client(api_key=api_key)
+    client = genai.Client(api_key=gemini_key)
 
     categories = "acaibowls", "bagels", "bakeries", "beer_and_wine", "breweries", "bubbletea", "butcher", "coffee", "coffeeteasupplies", "coffeeroasteries", "convenience", "cupcakes", "customcakes", "delicatessen", "desserts", "distilleries", "diyfood", "donuts", "empanadas", "ethicgrocery", "farmersmarket", "fooddeliveryservices", "foodtrucks", "gelato", "grocery", "icecream", "importedfood", "intlgrocery", "internetcafe", "juicebars", "kombucha", "meaderies", "milkshakebars", "gourmet", "candy", "cheese", "chocolate", "driedfruit", "frozenfood", "healthmarkets", "herbsandspices", "macarons", "meats", "oliveoil", "pastashops", "popcorn", "seafoodmarkets", "tofu", "streetvendors", "sugarshacks", "tea", "torshi", "tortillas", "waterstores", "wineries", "winetastingroom"
     instruction = (
